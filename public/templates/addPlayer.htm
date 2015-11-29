@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h3 class="modal-title">Dodaj gracza</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" name="addPlayerForm" novalidate>
+    <div class="form-group">
+      <label class="col-sm-3">Nick</label>
+      <div class="col-sm-9">
+        <input type="text" ng-model='player.nickName' name="nickName" required class="form-control" />
+        <div ng-show="addPlayerForm.nickName.$dirty">
+          <div class="text-danger" ng-show="addPlayerForm.nickName.$error.required">
+            Nick jest wymagany.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3">Email</label>
+      <div class="col-sm-9">
+        <input type="email" ng-model='player.emailAddress' name="emailAddress" required class="form-control" />
+        <div ng-show="addPlayerForm.emailAddress.$dirty">
+          <div class="text-danger" ng-show="addPlayerForm.emailAddress.$error.required">
+            Email jest wymagany.
+          </div>
+          <div class="text-danger" ng-show="addPlayerForm.emailAddress.$error.email">
+            Zły email!
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="add()">Add</button>
+  <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+</div>

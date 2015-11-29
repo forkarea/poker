@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="gorrionPoker">
+
+<head>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css' />
+  <link rel='stylesheet' href='/bower_components/angular-bootstrap/ui-bootstrap-csp.css' />
+  <title>Gorrion Poker</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Gorrion Poker</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="#/players">Gracze</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div ng-view></div>
+  </div>
+</body>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-route/angular-route.min.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="/app/app.js"></script>
+<script src="/app/services/helpers.js"></script>
+<script src="/app/services/playersService.js"></script>
+<script src="/app/controllers/playersController.js"></script>
+<script src="/app/controllers/homeController.js"></script>
+<script src="/app/controllers/addPlayerController.js"></script>
+</html>

@@ -1,0 +1,19 @@
+<div>
+	<button class="btn btn-primary" ng-click="addPlayer()">Dodaj gracza</button>
+</div>
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nick</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="player in players">
+				<td>{{player.nickName}}</td>
+				<td>{{player.emailAddress}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
