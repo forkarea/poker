@@ -4,7 +4,7 @@
 	app.config(['$routeProvider', '$locationProvider',
 		function ($routeProvider, $locationProvider) {
 			$routeProvider.
-				when("/", {
+				when("", {
 					templateUrl: "/templates/homeView.htm",
 					controller: "homeController",
 				}).
@@ -13,7 +13,7 @@
 					controller: "playersController",
 				}).
 				otherwise({
-					redirectTo: "/"
+					redirectTo: ""
 				});
 
 		}]);
