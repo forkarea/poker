@@ -12,19 +12,17 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-        aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
+        <button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">Gorrion Poker</a>
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
+      <div class="navbar-collapse" collapse="isCollapsed">
         <ul class="nav navbar-nav">
-          <li ng-class="isActive('')"><a href="/">Home</a></li>
-          <li ng-class="isActive('/players')"><a href="#/players">Gracze</a></li>
+          <li ng-class="isActive('')"><a href="/" ng-click="isCollapsed = true">Home</a></li>
+          <li ng-class="isActive('/players')"><a href="#/players" ng-click="isCollapsed = true">Gracze</a></li>
         </ul>
       </div>
       <!--/.nav-collapse -->
@@ -38,7 +36,6 @@
 </body>
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
