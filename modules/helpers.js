@@ -21,5 +21,11 @@ exports.getScoring = function(numOfPlayers) {
 }
 
 exports.getMonthBoundaryDates = function(month, year) {
+	var startDate = new Date(year, month, 1);
+	var endDate = new Date(year, month + 1, 0);
 	
+	return {
+		startDate: startDate,
+		endDate: endDate
+	};
 }

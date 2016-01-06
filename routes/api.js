@@ -4,7 +4,7 @@ var db = require("../modules/db");
 var helpers = require("../modules/helpers");
 
 router.get('/players', function (req, res, next) {
-	var dbPlayers = db.Player.find((err, players) => {
+	db.Player.find((err, players) => {
 		if (err)
 			res.status(500).json({ error: err.message, stack: err.stack });
 		else
@@ -32,7 +32,7 @@ router.post('/game', function (req, res, next) {
 	var players = req.body.players;
 
 	var scoring = helpers.getScoring(players.length);
-	
+
 	var matchPlayers = [];
 	for (var i = 0; i < players.length; i++) {
 		matchPlayers.push({
@@ -40,12 +40,12 @@ router.post('/game', function (req, res, next) {
 			score: i < scoring.length ? scoring[i] : -2
 		});
 	}
-	
+
 	var game = new db.Game({
-		datePlayed:  req.body.datePlayed,
+		datePlayed: req.body.datePlayed,
 		players: matchPlayers
 	});
-	
+
 	game.save((err, result) => {
 		if (err)
 			res.status(500).json({ error: err.message, stack: err.stack });
@@ -54,10 +54,23 @@ router.post('/game', function (req, res, next) {
 	});
 });
 
-router.get('/gamesCalendar',function (req, res, next) {
-	var date = new Date();	
-	
-	var games = db.Game.where('datePlayed').gte()
+router.get('/gamesCalendar', function (req, res, next) {
+	var currentDate = new Date(),
+		month = req.body.month ? req.body.month : currentDate.getMonth(),
+		year = req.body.year ? req.body.year : currentDate.getFullYear();
+
+	var boundaries = helpers.getMonthBoundaryDates(month, year);
+
+	var games = db.Game.where('datePlayed').gte(boundaries.startDate)
+					   .where('datePlayed').lt(boundaries.endDate);
+					   
+	games.exec((err, games) => {
+		if (err)
+			res.status(500).json({ error: err.message, stack: err.stack });
+		else {
+			res.status(200).json(games);
+		}
+	});
 });
 
 
