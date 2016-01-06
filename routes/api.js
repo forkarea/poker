@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require("../modules/db");
 var helpers = require("../modules/helpers");
+var _ = require('underscore')._;
 
 router.get('/players', function (req, res, next) {
 	db.Player.find((err, players) => {
@@ -63,12 +64,45 @@ router.get('/gamesCalendar', function (req, res, next) {
 
 	var games = db.Game.where('datePlayed').gte(boundaries.startDate)
 					   .where('datePlayed').lt(boundaries.endDate);
-					   
+
 	games.exec((err, games) => {
 		if (err)
 			res.status(500).json({ error: err.message, stack: err.stack });
 		else {
 			res.status(200).json(games);
+		}
+	});
+});
+
+router.get('/graphData', function (req, res, next) {
+	var currentDate = new Date(),
+		month = req.body.month ? req.body.month : currentDate.getMonth(),
+		year = req.body.year ? req.body.year : currentDate.getFullYear(),
+		playerId = req.body.playerId;
+
+	var boundaries = helpers.getMonthBoundaryDates(month, year);
+
+	var games = db.Game.where('datePlayed').gte(boundaries.startDate)
+					   .where('datePlayed').lt(boundaries.endDate);
+
+	games.exec((err, games) => {
+		if (err)
+			res.status(500).json({ error: err.message, stack: err.stack });
+		else {
+			var playerGames = [];
+			_.each(games, (game) => {
+				playerGames.push(game.players);
+			});
+			var playerScores = _.where(_.flatten(playerGames), { 'player.id': playerId });
+
+			var startingScore = 100;
+			var graphData = [startingScore];
+			for (var playerScore in playerScores) {
+				startingScore += playerScore.score;
+				graphData.push(startingScore);
+			}
+			
+			res.status(200).json(graphData);
 		}
 	});
 });
