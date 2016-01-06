@@ -10,8 +10,9 @@ playerSchema.add({
 
 var db = {
     Player: mongoose.model('Player', playerSchema),
-    GamePlayer: mongoose.model('GamePlayer', {
-        
+    Game: mongoose.model('Game', {
+        datePlayed: Date,
+        players: [{ player: playerSchema, score: Number}]
     })
 }
 
