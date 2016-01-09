@@ -1,5 +1,5 @@
 (function () {
-	var app = angular.module('gorrionPoker', ['ngRoute', 'ui.bootstrap']);
+	var app = angular.module('gorrionPoker', ['ngRoute', 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
 
 	app.config(['$routeProvider', '$locationProvider',
 		function ($routeProvider, $locationProvider) {
@@ -11,6 +11,10 @@
 				when("/players", {
 					templateUrl: "/templates/players.htm",
 					controller: "playersController",
+				}).
+				when("/games/add", {
+					templateUrl: "/templates/addGame.htm",
+					controller: "addGameController",
 				}).
 				otherwise({
 					redirectTo: ""
