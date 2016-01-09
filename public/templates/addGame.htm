@@ -1,18 +1,24 @@
 <h2>Dodaj grę</h2>
 
-<form class="form-horizontal" name="addGame" novalidate>
+<form class="form-horizontal" name="addGameForm" novalidate>
 	<div class="form-group">
-		<div class="dropdown">
-			<a class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">
-				<div class="input-append">
-					<input type="text" class="input-large" data-ng-model="data.datePlayed"><span class="add-on"><i
-                class="icon-calendar"></i></span>
-				</div>
-			</a>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				<datetimepicker data-ng-model="data.datePlayed" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
-			</ul>
+		<label class="col-sm-3">Data rozgrywki</label>
+		<div class="col-sm-9">
+			<div class="dropdown">
+				<a class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+					<div class="input-append">
+						<input type="text" name="datePlayed" class="form-control" value="{{datePlayed | date:'yyyy-MM-dd HH:mm'}}" style="max-width: 250px;" required >
+					</div>
+					<div ng-show="!datePlayed">
+						<div class="text-danger">
+							Data rozgrywki jest wymagana
+						</div>
+					</div>
+				</a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					<datetimepicker data-ng-model="datePlayed" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+				</ul>
+			</div>
 		</div>
-
 	</div>
 </form>

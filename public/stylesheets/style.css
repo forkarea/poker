@@ -11,6 +11,13 @@ a {
 .m-b-5 {
   margin-bottom: 5px; }
 
+.tb-icon {
+  margin-right: 6px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 1000;
+  left: -20px; }
+
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important; }
 
