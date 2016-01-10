@@ -38,7 +38,7 @@ router.post('/game', function (req, res, next) {
 	for (var i = 0; i < players.length; i++) {
 		matchPlayers.push({
 			player: players[i],
-			score: i < scoring.length ? scoring[i] : -2
+			score: i < scoring.length ? scoring[i] - 2 : -2
 		});
 	}
 
@@ -57,19 +57,19 @@ router.post('/game', function (req, res, next) {
 
 router.get('/gamesCalendar', function (req, res, next) {
 	var currentDate = new Date(),
-		month = req.body.month ? req.body.month : currentDate.getMonth(),
-		year = req.body.year ? req.body.year : currentDate.getFullYear();
+		month = req.query.month ? req.query.month : currentDate.getMonth(),
+		year = req.query.year ? req.query.year : currentDate.getFullYear();
 
 	var boundaries = helpers.getMonthBoundaryDates(month, year);
 
 	var games = db.Game.where('datePlayed').gte(boundaries.startDate)
 					   .where('datePlayed').lt(boundaries.endDate);
-
+					   
 	games.exec((err, games) => {
 		if (err)
 			res.status(500).json({ error: err.message, stack: err.stack });
 		else {
-			res.status(200).json(games);
+			res.status(200).json(_.sortBy(games, 'datePlayed'));
 		}
 	});
 });

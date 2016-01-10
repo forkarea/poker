@@ -22,7 +22,7 @@ exports.getScoring = function(numOfPlayers) {
 
 exports.getMonthBoundaryDates = function(month, year) {
 	var startDate = new Date(year, month, 1);
-	var endDate = new Date(year, month + 1, 0);
+	var endDate = new Date(year, parseInt(month) + 1, 1);
 	
 	return {
 		startDate: startDate,

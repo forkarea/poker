@@ -1,24 +1,57 @@
 body
   padding: 50px
   font: 14px "Comic Sans MS", Helvetica, Arial, sans-serif
+  @media (max-width: 767px) 
+    padding-left: 0
+    padding-right: 0
+
+[ng\:cloak], [ng-cloak], .ng-cloak 
+  display: none !important
 
 a
   color: #00B7FF
   
 .m-t-5
-  margin-top: 5px;
+  margin-top: 5px
   
 .m-b-5
-  margin-bottom: 5px;
+  margin-bottom: 5px
   
 
 .tb-icon
-    margin-right: 6px;
-    margin-top: -20px;
-    position: relative;
-    z-index: 1000;
-    left: -20px;
-  
+    margin-right: 6px
+    margin-top: -20px
+    position: relative
+    z-index: 1000
+    left: -20px
 
-[ng\:cloak], [ng-cloak], .ng-cloak 
-  display: none !important;
+.gold
+    background: linear-gradient(45deg,  rgba(242,215,12,1) 0%,rgba(255,255,255,1) 56%,rgba(252,235,0,1) 96%)
+    border-top: 1px solid rgba(255,255,255,0.3)
+    border-left: 1px solid rgba(255,255,255,0.3)
+    border-bottom: 1px solid rgba(242,215,12,0.3)
+    border-right: 1px solid rgba(242,215,12,0.3)
+    box-shadow: inset 0px 0px 2px 2px rgba(150, 150, 150, .05)
+    
+.silver
+  background: linear-gradient(45deg,  rgba(181,181,181,1) 0%,rgba(252,252,252,1) 56%,rgba(232,232,232,1) 96%)
+  border-top: 1px solid rgba(255,255,255,0.3)
+  border-left: 1px solid rgba(255,255,255,0.3)
+  border-bottom: 1px solid rgba(160,160,160,0.3)
+  border-right: 1px solid rgba(160,160,160,0.5)
+  box-shadow: inset 0px 0px 2px 2px rgba(150, 150, 150, .05)
+
+.bronze
+  background: linear-gradient(45deg,  rgba(223,182,103,1) 0%,rgba(249,243,232,1) 56%,rgba(231,192,116,1) 96%)
+  border-top: 1px solid rgba(255,255,255,0.3)
+  border-left: 1px solid rgba(255,255,255,0.3)
+  border-bottom: 1px solid rgba(209,156,53,0.3)
+  border-right: 1px solid rgba(209,156,53,0.5)
+  box-shadow: inset 0px 0px 2px 2px rgba(153, 106, 26, .05)
+  
+.games-wrapper
+  overflow-x: auto
+  .games 
+    min-width: 500px
+    th.highlighted, td.highlighted
+        background-color: rgb(160, 195, 255)

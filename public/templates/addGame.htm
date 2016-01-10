@@ -1,24 +1,54 @@
-<h2>Dodaj grę</h2>
-
-<form class="form-horizontal" name="addGameForm" novalidate>
-	<div class="form-group">
-		<label class="col-sm-3">Data rozgrywki</label>
-		<div class="col-sm-9">
-			<div class="dropdown">
-				<a class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">
-					<div class="input-append">
-						<input type="text" name="datePlayed" class="form-control" value="{{datePlayed | date:'yyyy-MM-dd HH:mm'}}" style="max-width: 250px;" required >
-					</div>
-					<div ng-show="!datePlayed">
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h4>Dodaj Grę</h4>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" name="addGameForm" novalidate>
+			<div class="row">
+				<label class="col-sm-2 control-label">Gracze</label>
+				<div class="col-sm-4">
+					<div isteven-multi-select output-model="selectedPlayers" input-model="players" item-label="nickName" button-label="nickName"
+					tick-property="selected" translation="translations"></div>
+					<div ng-show="!selectedPlayers || !selectedPlayers.length">
 						<div class="text-danger">
-							Data rozgrywki jest wymagana
+							Wybierz minimum jednego gracza
 						</div>
 					</div>
-				</a>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-					<datetimepicker data-ng-model="datePlayed" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
-				</ul>
+				</div>
+				<label class="col-sm-2 control-label">Data rozgrywki</label>
+				<div class="col-sm-4">
+					<div class="dropdown">
+						<a class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+							<div class="input-append">
+								<input type="text" name="datePlayed" class="form-control" value="{{datePlayed | date:'yyyy-MM-dd HH:mm'}}" style="max-width: 250px;">
+							</div>
+							<div ng-show="!datePlayed">
+								<div class="text-danger">
+									Data rozgrywki jest wymagana
+								</div>
+							</div>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<datetimepicker style="z-index: 10000;" data-ng-model="datePlayed" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+						</ul>
+					</div>
+				</div>
 			</div>
-		</div>
+			<div class="row m-t-5">
+				<div class="col-sm-6 dndList">
+					<label ng-show="selectedPlayers.length > 0">Uszereguj graczy zgodnie z zajętym miejscem</label>
+					<div class="clearfix"></div>
+					<ul dnd-list="selectedPlayers">
+						<li ng-repeat="item in selectedPlayers" dnd-draggable="item" dnd-moved="selectedPlayers.splice($index, 1)" dnd-effect-allowed="move"
+						ng-class="$index == 0 ? 'gold' : $index == 1 ? 'silver' : $index == '2' ? 'bronze' : ''">
+							{{($index + 1) + '. ' + item.nickName}}
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row text-center">
+				<button type="button" class="btn btn-primary" ng-click="saveGame(selectedPlayers, datePlayed)">Zapisz grę</button>
+			</div>
+		</form>
 	</div>
-</form>
+</div>

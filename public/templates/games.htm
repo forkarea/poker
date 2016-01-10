@@ -1,0 +1,45 @@
+<div class="panel panel-primary m-t-5">
+	<div class="panel-heading">
+		<h2>
+			Rozgrywki
+			<a href="#/games/add" class="btn btn-default btn-sm">Dodaj nową grę</a>
+		</h2>
+	</div>
+	<div class="panel-body">		
+		<div>
+			Rok:
+			<select name="year" id="year" ng-model="year" ng-options="y as y for y in years" ng-change="getGames(month, year)"></select>
+			Miesiąc:
+			<select name="month" id="month" ng-model="month" ng-options="month.value as month.label for month in months" ng-change="getGames(month, year)"></select>
+		</div>
+		<div class="row m-t-5 games-wrapper">
+			<table class="table table-striped table-bordered games">
+				<thead>
+					<tr>
+						<th class="text-center">Bankroll początkowy</th>
+						<th ng-repeat="player in players" class="text-center">{{player.nickName}}</th>
+					</tr>
+					<tr>
+						<th class="highlighted text-center">100</th>
+						<th class="highlighted" ng-repeat="(id, score) in playersScores">{{score}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="game in games">
+						<td class="highlighted">{{ game.datePlayed | date:'yyyy-MM-dd HH:mm' }}</td>
+						<td ng-repeat="player in players">
+							{{ getPlayerScore(game, player._id) }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="m-t-5">
+			<h2>Statystyki</h2>
+			<div>
+				Gracz:
+				<select name="player" id="player" ng-model="idPlayer" ng-options="player._id as player.nickName for player in players"></select>
+			</div>
+		</div>
+	</div>
+</div>

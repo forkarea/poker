@@ -3,10 +3,14 @@
 
 <head>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/dndLists.css' />
   <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css' />
   <link rel='stylesheet' href='/bower_components/angular-bootstrap/ui-bootstrap-csp.css' />
   <link rel="stylesheet" href="/bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" />
   <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="/bower_components/isteven-angular-multiselect/isteven-multi-select.css">
+  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+
   <title>Gorrion Poker</title>
 </head>
 
@@ -23,7 +27,7 @@
       </div>
       <div class="navbar-collapse" collapse="isCollapsed">
         <ul class="nav navbar-nav">
-          <li ng-class="isActive('')"><a href="/" ng-click="isCollapsed = true">Home</a></li>
+          <li ng-class="isActive('/games')"><a href="#/games" ng-click="isCollapsed = true">Rozgrywki</a></li>
           <li ng-class="isActive('/players')"><a href="#/players" ng-click="isCollapsed = true">Gracze</a></li>
         </ul>
       </div>
@@ -37,25 +41,31 @@
 
 </body>
 
+<!-- Third Party Libs -->
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="/bower_components/moment/moment.js"></script>
-<script type="text/javascript" src="/bower_components/moment/locale/pl.js"></script>
-<script type="text/javascript" src="/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+<script src="/bower_components/moment/moment.js"></script>
+<script src="/bower_components/moment/locale/pl.js"></script>
+<script src="/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+<script src="/bower_components/isteven-angular-multiselect/isteven-multi-select.js"></script>
+<script src="/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+
+<!-- APP -->
 <script src="/app/app.js"></script>
 <script src="/app/services/helpers.js"></script>
 
 <!-- Services -->
 <script src="/app/services/playersService.js"></script>
 <script src="/app/services/gamesService.js"></script>
+
 <!-- Controllers -->
 <script src="/app/controllers/mainController.js"></script>
 <script src="/app/controllers/playersController.js"></script>
-<script src="/app/controllers/homeController.js"></script>
 <script src="/app/controllers/addPlayerController.js"></script>
 <script src="/app/controllers/gamesController.js"></script>
 <script src="/app/controllers/addGameController.js"></script>
