@@ -3,6 +3,7 @@
 
 	app.controller("gamesController", function ($scope, games, players) {
 		$scope.playersScores = {};
+		$scope.playerStats = {};
 
 		function init() {
 			var currentDate = new Date();
@@ -51,6 +52,15 @@
 			return "-";
 		}
 
+		$scope.getPlayerStatistics = function (idPlayer, month, year) {
+			games.statistics(idPlayer, month, year).then(function (data) {
+				$scope.playerStats = {
+					labels: data.labels,
+					data: data.data
+				};
+			});
+		}
+
 		function calculatePlayerScores() {
 			for (var i = 0; i < $scope.players.length; i++) {
 				$scope.playersScores[$scope.players[i]._id] = 100;
@@ -66,12 +76,6 @@
 			}
 		}
 
-		$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-		$scope.series = ['Series A', 'Series B'];
-		$scope.data = [
-			[65, 59, 80, 81, 56, 55, 40],
-			[28, 48, 40, 19, 86, 27, 90]
-		];
 
 		init();
 		$scope.getGames();

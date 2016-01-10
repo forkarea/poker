@@ -64,7 +64,7 @@ router.get('/gamesCalendar', function (req, res, next) {
 
 	var games = db.Game.where('datePlayed').gte(boundaries.startDate)
 					   .where('datePlayed').lt(boundaries.endDate);
-					   
+
 	games.exec((err, games) => {
 		if (err)
 			res.status(500).json({ error: err.message, stack: err.stack });
@@ -74,11 +74,11 @@ router.get('/gamesCalendar', function (req, res, next) {
 	});
 });
 
-router.get('/graphData', function (req, res, next) {
+router.get('/graphData/:year/:month/:idPlayer', function (req, res, next) {
 	var currentDate = new Date(),
-		month = req.body.month ? req.body.month : currentDate.getMonth(),
-		year = req.body.year ? req.body.year : currentDate.getFullYear(),
-		playerId = req.body.playerId;
+		month = req.params.month ? req.params.month : currentDate.getMonth(),
+		year = req.params.year ? req.params.year : currentDate.getFullYear(),
+		idPlayer = req.params.idPlayer;
 
 	var boundaries = helpers.getMonthBoundaryDates(month, year);
 
@@ -93,16 +93,19 @@ router.get('/graphData', function (req, res, next) {
 			_.each(games, (game) => {
 				playerGames.push(game.players);
 			});
-			var playerScores = _.where(_.flatten(playerGames), { 'player.id': playerId });
+			var playerScores = _.filter(_.flatten(playerGames), function (playerGame) { return playerGame.player._id.toString() == idPlayer });
 
-			var startingScore = 100;
-			var graphData = [startingScore];
-			for (var playerScore in playerScores) {
-				startingScore += playerScore.score;
-				graphData.push(startingScore);
+			var score = 100;
+
+			var graphData = [score];
+			var graphLabels = [0]
+			for (var i = 0; i < playerScores.length; i++) {
+				score += playerScores[i].score;
+				graphData.push(score);
+				graphLabels.push(i + 1);
 			}
-			
-			res.status(200).json(graphData);
+
+			res.status(200).json({ data: [graphData], labels: graphLabels });
 		}
 	});
 });

@@ -6,8 +6,15 @@
 			return $http.post("/api/game", { datePlayed: datePlayed, players: players });
 		}
 
-		function games(month, year) {
+		function getGames(month, year) {
 			return $http.get("/api/gamesCalendar", { params: { month: month, year: year } })
+				.then(function (response) {
+					return response.data;
+				});
+		}
+
+		function getPlayerStatistics(idPlayer, month, year) {
+			return $http.get("/api/graphData/" + year + "/" + month + "/" + idPlayer)
 				.then(function (response) {
 					return response.data;
 				});
@@ -15,7 +22,8 @@
 
 		return {
 			addGame: addGame,
-			games: games
+			games: getGames,
+			statistics: getPlayerStatistics
 		}
 	});
 })();

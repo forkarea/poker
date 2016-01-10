@@ -38,7 +38,12 @@
 			<h2>Statystyki</h2>
 			<div>
 				Gracz:
-				<select name="player" id="player" ng-model="idPlayer" ng-options="player._id as player.nickName for player in players"></select>
+				<select name="player" id="player" ng-model="idPlayer" ng-change="getPlayerStatistics(idPlayer, month, year)"
+					ng-options="player._id as player.nickName for player in players"></select>
+			</div>
+			<div class="m-t-5 col-sm-6">
+				<canvas id="line" class="chart chart-line" chart-data="playerStats.data" chart-labels="playerStats.labels" chart-series="['Trend']">
+				</canvas> 
 			</div>
 		</div>
 	</div>
