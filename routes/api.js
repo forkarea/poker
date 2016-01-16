@@ -1,8 +1,27 @@
 var express = require('express');
+var jwt = require("jsonwebtoken");
 var router = express.Router();
 var db = require("../modules/db");
 var helpers = require("../modules/helpers");
 var _ = require('underscore')._;
+
+router.post('/authenticate', function (req, res) {
+	var username = req.body.username || '';
+    var password = req.body.password || '';
+
+    if (username == '' || password == '') {
+        return res.send(401);
+    }
+
+	if (username == "admin" && password == "123456") {
+		var token = jwt.sign(username, 'secretToken', { expiresInMinutes: 6000 });
+
+		return res.json({ token: token });
+	}
+	else
+		return res.send(401);
+
+});
 
 router.get('/players', function (req, res, next) {
 	db.Player.find((err, players) => {
@@ -15,6 +34,9 @@ router.get('/players', function (req, res, next) {
 
 
 router.post('/player', function (req, res, next) {
+	if (jwt.verify(req.header('Authorization'), 'secretToken') != 'admin')
+		return res.send(401);
+
 	var dbPlayer = new db.Player({
 		nickName: req.body.nickName,
 		emailAddress: req.body.emailAddress
@@ -30,6 +52,9 @@ router.post('/player', function (req, res, next) {
 });
 
 router.post('/game', function (req, res, next) {
+	if (jwt.verify(req.header('Authorization'), 'secretToken') != 'admin')
+		return res.send(401);
+		
 	var players = req.body.players;
 
 	var scoring = helpers.getScoring(players.length);

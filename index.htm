@@ -29,6 +29,7 @@
         <ul class="nav navbar-nav">
           <li ng-class="isActive('/games')"><a href="#/games" ng-click="isCollapsed = true">Rozgrywki</a></li>
           <li ng-class="isActive('/players')"><a href="#/players" ng-click="isCollapsed = true">Gracze</a></li>
+          <li ng-class="isActive('/admin/login')"><a href="#/admin/login" ng-click="isCollapsed = true" ng-hide='isLogged'>Zaloguj</a></li>
         </ul>
       </div>
       <!--/.nav-collapse -->
@@ -63,6 +64,7 @@
 <!-- Services -->
 <script src="/app/services/playersService.js"></script>
 <script src="/app/services/gamesService.js"></script>
+<script src="/app/services/authenticationService.js"></script>
 
 <!-- Controllers -->
 <script src="/app/controllers/mainController.js"></script>
@@ -70,5 +72,6 @@
 <script src="/app/controllers/addPlayerController.js"></script>
 <script src="/app/controllers/gamesController.js"></script>
 <script src="/app/controllers/addGameController.js"></script>
+<script src="/app/controllers/loginController.js"></script>
 
 </html>

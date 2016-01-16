@@ -2,10 +2,10 @@
 	<div class="panel-heading">
 		<h2>
 			Rozgrywki
-			<a href="#/games/add" class="btn btn-default btn-sm">Dodaj nową grę</a>
+			<a href="#/games/add" class="btn btn-default btn-sm" ng-show='isLogged'>Dodaj nową grę</a>
 		</h2>
 	</div>
-	<div class="panel-body">		
+	<div class="panel-body">
 		<div>
 			Rok:
 			<select name="year" id="year" ng-model="year" ng-options="y as y for y in years" ng-change="getGames(month, year)"></select>
@@ -21,7 +21,7 @@
 					</tr>
 					<tr>
 						<th class="highlighted text-center">100</th>
-						<th class="highlighted" ng-repeat="(id, score) in playersScores">{{score}}</th>
+						<th class="highlighted" ng-repeat="(id, playerScore) in playersScores">{{playerScore.score}}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,17 +34,36 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="m-t-5">
+		<div class="m-t-5 col-sm-6">
 			<h2>Statystyki</h2>
 			<div>
 				Gracz:
-				<select name="player" id="player" ng-model="idPlayer" ng-change="getPlayerStatistics(idPlayer, month, year)"
-					ng-options="player._id as player.nickName for player in players"></select>
+				<select name="player" id="player" ng-model="idPlayer" ng-change="getPlayerStatistics(idPlayer, month, year)" ng-options="player._id as player.nickName for player in players"></select>
 			</div>
-			<div class="m-t-5 col-sm-6">
+			<div class="m-t-5" ng-show="idPlayer">
 				<canvas id="line" class="chart chart-line" chart-data="playerStats.data" chart-labels="playerStats.labels" chart-series="['Trend']">
-				</canvas> 
+				</canvas>
 			</div>
+		</div>
+		<div class="m-t-5 col-sm-6">
+			<h2>Ranking</h2>
+			<span ng-hide="eligiblePlayers.length" class="text-danger">Brak graczy spełniających zasady rankingowe.</span>
+			<table ng-show="eligiblePlayers.length" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<td>Gracz</td>
+						<td>Wynik</td>
+						<td>Rozegrane Gry</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="player in eligiblePlayers" ng-class="$index == 0 ? 'gold' : $index == 1 ? 'silver' : $index == '2' ? 'bronze' : ''">
+						<td>{{player.nickName}}</td>
+						<td>{{player.score}}</td>
+						<td>{{player.gamesPlayed}}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

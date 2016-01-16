@@ -1,9 +1,11 @@
 (function () {
 	var app = angular.module("gorrionPoker");
 
-	app.controller("gamesController", function ($scope, games, players) {
+	app.controller("gamesController", function ($scope, games, players, authenticationService) {
 		$scope.playersScores = {};
 		$scope.playerStats = {};
+
+		$scope.isLogged = authenticationService.isLogged;
 
 		function init() {
 			var currentDate = new Date();
@@ -40,6 +42,7 @@
 				$scope.games = data;
 
 				calculatePlayerScores();
+				$scope.idPlayer = '';
 			});
 		}
 
@@ -61,9 +64,35 @@
 			});
 		}
 
+		$scope.getEligiblePlayers = function (players, playerScores) {
+			var eligiblePlayers = [];
+			for (var id in playerScores) {
+				if (playerScores[id].gamesPlayed >= 10)
+					eligiblePlayers.push({
+						score: playerScores[id].score,
+						gamesPlayed: playerScores[id].gamesPlayed,
+						nickName: getPlayer(players, id).nickName
+					});
+			}
+
+			return eligiblePlayers.sort(function (a, b) {
+				return a.score > b.score ? -1 : a.score == b.score ? a.gamesPlayed < b.gamesPlayed : 1;
+			});
+		}
+
+		function getPlayer(players, id) {
+			for (var i = 0; i < players.length; i++) {
+				if (players[i]._id == id)
+					return players[i];
+			}
+		}
+
 		function calculatePlayerScores() {
 			for (var i = 0; i < $scope.players.length; i++) {
-				$scope.playersScores[$scope.players[i]._id] = 100;
+				$scope.playersScores[$scope.players[i]._id] = {
+					score: 100,
+					gamesPlayed: 0
+				};
 			}
 
 			var games = $scope.games;
@@ -71,9 +100,12 @@
 				var game = games[i];
 				for (var j = 0; j < game.players.length; j++) {
 					var playerScore = game.players[j];
-					$scope.playersScores[playerScore.player._id] += playerScore.score;
+					$scope.playersScores[playerScore.player._id].score += playerScore.score;
+					$scope.playersScores[playerScore.player._id].gamesPlayed++;
 				}
 			}
+
+			$scope.eligiblePlayers = $scope.getEligiblePlayers($scope.players, $scope.playersScores);
 		}
 
 
